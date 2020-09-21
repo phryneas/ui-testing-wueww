@@ -13,23 +13,23 @@ import { useMutation } from "urql";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {
   Task,
-  DeleteTodoVariables,
-  UpdateTodoStatusVariables,
-  deleteTodoMutation,
+  DeleteTasksVariables,
+  UpdateTaskStatusVariables,
+  deleteTaskMutation,
   refetchTasksCtx,
-  updateTodoStatusMutation,
+  updateTaskStatusMutation,
 } from "./graphql";
 
 export function TaskCard(props: { task: Task }) {
   const { id, title, description, done } = props.task;
   const [{ error: toggleDoneError }, updateTodo] = useMutation<
     {},
-    UpdateTodoStatusVariables
-  >(updateTodoStatusMutation);
+    UpdateTaskStatusVariables
+  >(updateTaskStatusMutation);
   const [{ error: deleteError }, deleteTodo] = useMutation<
     {},
-    DeleteTodoVariables
-  >(deleteTodoMutation);
+    DeleteTasksVariables
+  >(deleteTaskMutation);
 
   return (
     <Card raised>

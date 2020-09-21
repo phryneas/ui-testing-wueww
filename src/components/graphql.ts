@@ -10,15 +10,15 @@ export const refetchTasksCtx = { additionalTypenames: ["Task"] };
 export type AllTasksQueryResult = { allTasks: { nodes: Task[] } };
 
 export const allTasksQuery = `
-query {
+query AllTasks {
   allTasks {
     nodes { done, description, id, title }
   }  
 }
 `;
 
-export const addTodoMutation = `
-mutation ($title: String!, $description: String!) {
+export const addTaskMutation = `
+mutation AddTask ($title: String!, $description: String!) {
   createTask(input: {task: {title: $title, description: $description}}) {
     task {
       id
@@ -29,11 +29,11 @@ mutation ($title: String!, $description: String!) {
   }
 }
 `;
-export type AddTodoMutationResult = { task: Task };
-export type AddTodoMutationVariables = Pick<Task, "title" | "description">;
+export type AddTaskMutationResult = { task: Task };
+export type AddTaskMutationVariables = Pick<Task, "title" | "description">;
 
-export const updateTodoStatusMutation = `
-mutation  ($id: Int!, $done: Boolean!) { 
+export const updateTaskStatusMutation = `
+mutation UpdateDone ($id: Int!, $done: Boolean!) { 
   updateTaskById(input: {taskPatch: {done: $done}, id: $id}) {
   task {
     id
@@ -41,13 +41,13 @@ mutation  ($id: Int!, $done: Boolean!) {
   }
 }}`;
 
-export type UpdateTodoStatusVariables = { id: number; done: boolean };
+export type UpdateTaskStatusVariables = { id: number; done: boolean };
 
-export const deleteTodoMutation = `
-mutation  ($id: Int!) { 
+export const deleteTaskMutation = `
+mutation DeleteTask ($id: Int!) { 
   deleteTaskById(input: { id: $id } ) {
     deletedTaskId
   }
 }`;
 
-export type DeleteTodoVariables = { id: number };
+export type DeleteTasksVariables = { id: number };
