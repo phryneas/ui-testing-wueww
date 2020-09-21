@@ -1,25 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Container,
+  CssBaseline,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+
+function AddTodoSpace() {
+  return (
+    <Paper>
+      <TextField label="Titel" fullWidth />
+      <TextField label="Beschreibung" fullWidth />
+      <Button color="primary" fullWidth variant="outlined">
+        Hinzufügen
+      </Button>
+    </Paper>
+  );
+}
+
+function ListTodoSpace() {
+  return (
+    <Card raised>
+      <CardHeader title="Do That" />
+      <CardContent>What Todo</CardContent>
+      <CardActions>
+        <Button
+          startIcon={<CheckCircleOutlineIcon />}
+          size="small"
+          color="primary"
+        />
+      </CardActions>
+    </Card>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxWidth="sm">
+      <CssBaseline />
+      <Typography>Todo hinzufügen</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <AddTodoSpace />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>Todos</Typography>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <ListTodoSpace />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 

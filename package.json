@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -10,16 +12,22 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "graphql": "^15.3.0",
+    "postgraphile": "^4.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "urql": "^1.10.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-test-docker": "docker run --rm -d -p=54321:5432 -v \"$PWD/schema.sql:/docker-entrypoint-initdb.d/schema.sql\"  --name=postgraphile-test-postgres postgres:11.5",
+    "kill-test-docker": "docker kill postgraphile-test-postgres 2>/dev/null && docker wait postgraphile-test-postgres;",
+    "start-test-postgraphile": "yarn postgraphile --connection=postgres://postgres:postgres@localhost:54321/postgres --schema postgraphile_test --enhance-graphiql"
   },
   "eslintConfig": {
     "extends": "react-app"
