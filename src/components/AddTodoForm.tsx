@@ -28,7 +28,6 @@ export function AddTodoForm() {
     },
     validationSchema,
     async onSubmit(values, helpers) {
-      console.log(values);
       const result = await add(values);
       if (!result.error) {
         helpers.resetForm();
