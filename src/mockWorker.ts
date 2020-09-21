@@ -153,5 +153,5 @@ export function startMock(scenario?: "error" | "errorOnMutation" | "success") {
     )
   );
 
-  worker.start();
+  return worker.start();
 }
