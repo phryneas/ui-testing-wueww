@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { createClient, Provider } from "urql";
 
 const client = createClient({
-  url: "http://localhost:3000/graphql",
+  url: "http://localhost:5000/graphql",
 });
 
 ReactDOM.render(
