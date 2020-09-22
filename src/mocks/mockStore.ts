@@ -39,9 +39,6 @@ export function getMockStore(initialTasks: readonly Task[]) {
   });
   const { reducer, actions } = slice;
   const store = configureStore({ reducer: { tasks: reducer } });
-  store.subscribe(() => {
-    console.log("new store value", store.getState());
-  });
   type RootState = ReturnType<typeof store.getState>;
   const selectors = entityAdapter.getSelectors(
     (state: RootState) => state.tasks

@@ -4,13 +4,13 @@ import { getMockStore } from "./mockStore";
 
 const initialTasks = [
   {
-    __typename: "Task",
+    __typename: "Task" as const,
     id: 1,
     title: "Mock something!",
     description: "Add a first mock",
     done: true,
   },
-] as const;
+];
 
 export function startWorker(scenario: MockScenario | string) {
   const worker = setupWorker(

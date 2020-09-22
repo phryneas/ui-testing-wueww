@@ -45,6 +45,7 @@ export function AddTodoForm() {
       <form onSubmit={formik.handleSubmit}>
         <Grid>
           <TextField
+            id="newTask-title"
             inputProps={formik.getFieldProps("title")}
             error={formik.touched["title"] && !!formik.errors["title"]}
             helperText={formik.errors["title"]}
@@ -52,6 +53,7 @@ export function AddTodoForm() {
             fullWidth
           />
           <TextField
+            id="newTask-description"
             inputProps={formik.getFieldProps("description")}
             error={
               formik.touched["description"] && !!formik.errors["description"]

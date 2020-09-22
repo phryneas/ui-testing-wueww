@@ -16,10 +16,12 @@ function isMockScenario(s: string): s is MockScenario {
 }
 
 export function mockRequests(
-  _scenario: MockScenario | string,
+  initialMockingScrenario: MockScenario | string,
   mockStore: MockStoreResult
 ) {
-  const scenario = isMockScenario(_scenario) ? _scenario : "success";
+  let scenario = isMockScenario(initialMockingScrenario)
+    ? initialMockingScrenario
+    : "success";
 
   const postgraphile = graphql.link("http://localhost:5000/graphql");
 
@@ -110,8 +112,8 @@ export function mockRequests(
 
   return {
     requestHandlers,
-    reset() {
-      store.dispatch(actions.reset());
+    changeScenario(newScenario: MockScenario) {
+      scenario = newScenario;
     },
   };
 }

@@ -26,6 +26,10 @@
     "urql": "^1.10.1",
     "yup": "^0.29.3"
   },
+  "resolutions": {
+    "@testing-library/dom": "7.24.2",
+    "jsdom": "14.1.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
