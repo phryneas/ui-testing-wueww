@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:11.5
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - "./schema.sql:/docker-entrypoint-initdb.d/schema.sql"
+  postgraphile:
+    image: graphile/postgraphile:latest
+    command: "--cors --retry-on-init-fail --connection postgres://postgres:postgres@postgres:5432/postgres --schema postgraphile_test --enhance-graphiql"
+    ports: ["5000:5000"]

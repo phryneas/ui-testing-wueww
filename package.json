@@ -36,9 +36,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-test-docker": "docker run --rm -d -p=54321:5432 -v \"$PWD/schema.sql:/docker-entrypoint-initdb.d/schema.sql\"  --name=postgraphile-test-postgres postgres:11.5",
-    "kill-test-docker": "docker kill postgraphile-test-postgres 2>/dev/null && docker wait postgraphile-test-postgres;",
-    "start-test-postgraphile": "yarn postgraphile --connection=postgres://postgres:postgres@localhost:54321/postgres --schema postgraphile_test --cors --enhance-graphiql"
+    "cypress-ui": "yarn run cypress open",
+    "start-test-docker": "docker-compose -f docker-compose-test.yml up",
+    "stop-test-docker": "docker-compose -f docker-compose-test.yml down"
   },
   "eslintConfig": {
     "extends": "react-app"
