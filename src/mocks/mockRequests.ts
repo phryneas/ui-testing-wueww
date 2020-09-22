@@ -1,76 +1,31 @@
-import { setupWorker, graphql } from "msw";
+import { graphql } from "msw";
 import {
-  Task,
   AllTasksQueryResult,
   AddTaskMutationResult,
   AddTaskMutationVariables,
   UpdateTaskStatusVariables,
   DeleteTasksVariables,
-} from "./components/graphql";
-import {
-  configureStore,
-  createSlice,
-  createEntityAdapter,
-} from "@reduxjs/toolkit";
+} from "../components/graphql";
+import { MockStoreResult } from "./mockStore";
 
-function getMockStore(initialTasks: Task[]) {
-  let id = 100;
-  const entityAdapter = createEntityAdapter<Task>();
-  const initialState = entityAdapter.setAll(
-    entityAdapter.getInitialState(),
-    initialTasks
-  );
-  const slice = createSlice({
-    name: "tasks",
-    initialState,
-    reducers: {
-      addItem: {
-        reducer: entityAdapter.addOne,
-        prepare({ title, description }: Pick<Task, "title" | "description">) {
-          return {
-            payload: {
-              __typename: "Task" as const,
-              id: ++id,
-              title,
-              description,
-              done: false,
-            },
-          };
-        },
-      },
-      deleteItem: entityAdapter.removeOne,
-      updateItem: entityAdapter.upsertOne,
-    },
-  });
-  const { reducer, actions } = slice;
-  const store = configureStore({ reducer: { tasks: reducer } });
-  store.subscribe(() => {
-    console.log("new store value", store.getState());
-  });
-  type RootState = ReturnType<typeof store.getState>;
-  const selectors = entityAdapter.getSelectors(
-    (state: RootState) => state.tasks
-  );
-  return { actions, selectors, store };
+const allScencarios = ["error", "errorOnMutation", "success"] as const;
+export type MockScenario = typeof allScencarios[number];
+
+function isMockScenario(s: string): s is MockScenario {
+  return allScencarios.includes(s as any);
 }
 
-export function startMock(scenario?: "error" | "errorOnMutation" | "success") {
-  if (!["error", "errorOnMutation"].includes(scenario!)) {
-    scenario = "success";
-  }
+export function mockRequests(
+  _scenario: MockScenario | string,
+  mockStore: MockStoreResult
+) {
+  const scenario = isMockScenario(_scenario) ? _scenario : "success";
+
   const postgraphile = graphql.link("http://localhost:5000/graphql");
 
-  const { actions, selectors, store } = getMockStore([
-    {
-      __typename: "Task",
-      id: 1,
-      title: "Mock something!",
-      description: "Add a first mock",
-      done: true,
-    },
-  ]);
+  const { actions, selectors, store } = mockStore;
 
-  const worker = setupWorker(
+  const requestHandlers = [
     postgraphile.query<AllTasksQueryResult, {}>("AllTasks", (req, res, ctx) => {
       return res(
         scenario === "error"
@@ -150,8 +105,13 @@ export function startMock(scenario?: "error" | "errorOnMutation" | "success") {
               })
         );
       }
-    )
-  );
+    ),
+  ];
 
-  return worker.start();
+  return {
+    requestHandlers,
+    reset() {
+      store.dispatch(actions.reset());
+    },
+  };
 }

@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import { createClient, Provider } from "urql";
 
-import { startMock } from "./mockWorker";
+import { startWorker } from "./mocks/mockWorker";
 
 if (process.env.NODE_ENV === "development") {
   const params = new URLSearchParams(window.location.search);
   if (params.has("mock")) {
-    const mock = params.get("mock");
-    startMock(mock as any).then(renderApp);
+    const mock = params.get("mock")!;
+    startWorker(mock).then(renderApp);
   } else {
     renderApp();
   }
