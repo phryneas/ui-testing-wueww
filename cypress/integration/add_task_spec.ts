@@ -1,6 +1,13 @@
 /// <reference types="cypress" />
 
+import { css } from "cypress/types/jquery";
+
 describe("Add a Task", () => {
+  beforeEach(() => {
+    cy.server();
+    cy.route("POST", "http://localhost:5000/graphql").as("graphql");
+  });
+
   it("Vistit the page", () => {
     cy.visit("http://localhost:3000");
   });
@@ -17,7 +24,11 @@ describe("Add a Task", () => {
 
   it("Press 'Hinzufügen'", () => {
     cy.get(".MuiGrid-root > .MuiButtonBase-root").click();
-    cy.get(":nth-child(1)").contains("Write tests with cypress");
-    cy.get(":nth-child(1)").contains("For Integration Testing");
+
+    cy.wait("@graphql");
+
+    cy.get(":nth-child(2) > .MuiGrid-container")
+      .children()
+      .should("have.length.at.least", 1);
   });
 });
