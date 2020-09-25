@@ -1,3 +1,4 @@
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { useQuery } from "urql";
 import { AllTasksQueryResult, allTasksQuery, refetchTasksCtx } from "./graphql";
@@ -13,7 +14,9 @@ export function TasksList() {
   return (
     <>
       {res.data?.allTasks.nodes.map((task) => (
-        <TaskCard key={task.id} task={task} />
+        <Grid key={task.id} item xs={12}>
+          <TaskCard task={task} />
+        </Grid>
       ))}
     </>
   );

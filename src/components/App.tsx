@@ -15,9 +15,7 @@ function App() {
         <Grid item xs={12}>
           <Typography>Todos</Typography>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <TasksList />
-            </Grid>
+            <TasksList />
           </Grid>
         </Grid>
       </Grid>
