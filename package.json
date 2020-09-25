@@ -36,8 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress-ui": "yarn run cypress open",
-    "start-test-docker": "docker-compose -f docker-compose-test.yml up",
+    "cypress-ui": "yarn run cypress open&",
+    "start-test-docker": "docker-compose -f docker-compose-test.yml up -d",
     "stop-test-docker": "docker-compose -f docker-compose-test.yml down"
   },
   "eslintConfig": {
