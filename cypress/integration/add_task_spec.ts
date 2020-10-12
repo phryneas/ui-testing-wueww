@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
-
-import { css } from "cypress/types/jquery";
+/// <reference types="@testing-library/cypress" />
 
 describe("Add a Task", () => {
   beforeEach(() => {
@@ -23,12 +22,15 @@ describe("Add a Task", () => {
   });
 
   it("Press 'Hinzufügen'", () => {
-    cy.get(".MuiGrid-root > .MuiButtonBase-root").click();
+    cy.get("[data-testid=TaskList]").then((lastListDomState) => {
+      const currentTaskCount = lastListDomState.children().length;
 
-    cy.wait("@graphql");
+      cy.findByText("Hinzufügen").click();
+      cy.wait("@graphql");
 
-    cy.get(":nth-child(2) > .MuiGrid-container")
-      .children()
-      .should("have.length.at.least", 1);
+      cy.get("[data-testid=TaskList]")
+        .children()
+        .should("have.length", currentTaskCount + 1);
+    });
   });
 });

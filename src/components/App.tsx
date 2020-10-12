@@ -1,7 +1,7 @@
-import React from "react";
-import { Container, CssBaseline, Grid, Typography } from "@material-ui/core";
-import { AddTodoForm } from "./AddTodoForm";
-import { TasksList } from "./TasksList";
+import React from 'react'
+import { Container, CssBaseline, Grid, Typography } from '@material-ui/core'
+import { AddTodoForm } from './AddTodoForm'
+import { TasksList } from './TasksList'
 
 function App() {
   return (
@@ -14,13 +14,11 @@ function App() {
         </Grid>
         <Grid item xs={12}>
           <Typography>Todos</Typography>
-          <Grid container spacing={1}>
-            <TasksList />
-          </Grid>
+          <TasksList />
         </Grid>
       </Grid>
     </Container>
-  );
+  )
 }
 
-export default App;
+export default App
