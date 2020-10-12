@@ -32,7 +32,7 @@ export function TaskCard(props: { task: Task }) {
   >(deleteTaskMutation);
 
   return (
-    <Card component="section" raised>
+    <Card component="section">
       <CardHeader
         title={title}
         avatar={

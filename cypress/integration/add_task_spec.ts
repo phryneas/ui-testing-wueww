@@ -8,7 +8,7 @@ describe("Add a Task", () => {
   });
 
   it("Vistit the page", () => {
-    cy.visit("http://localhost:3000");
+    cy.visit("http://localhost:3000/?mock");
   });
 
   it("Fill input fields", () => {
