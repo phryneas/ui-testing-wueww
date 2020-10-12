@@ -12,11 +12,11 @@ describe("Add a Task", () => {
   });
 
   it("Fill input fields", () => {
-    cy.get("#newTask-title")
+    cy.findByLabelText("Titel")
       .type("Write tests with cypress")
       .should("have.value", "Write tests with cypress");
 
-    cy.get("#newTask-description")
+    cy.findByLabelText("Beschreibung")
       .type("For Integration Testing")
       .should("have.value", "For Integration Testing");
   });
