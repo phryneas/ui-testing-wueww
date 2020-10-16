@@ -5,7 +5,7 @@ import App from "./App";
 import { act } from "react-dom/test-utils";
 import { setupTests } from "../mocks/setupTests";
 
-const { renderWithProvider, boundActions } = setupTests();
+const { renderWithProvider, boundActions, changeScenario } = setupTests();
 
 test("adding a new task", async () => {
   boundActions.setAll([]);
@@ -35,4 +35,31 @@ test("adding a new task", async () => {
   const titleElement = await screen.findByText(/TestTitel/);
   const taskCard = titleElement.closest("section")!;
   getByText(taskCard, "TestBeschreibung");
+});
+
+test("adding a new task (failing)", async () => {
+  changeScenario("errorOnMutation");
+  boundActions.setAll([]);
+  renderWithProvider(<App />);
+
+  const titelInput = await screen.findByLabelText(/Titel/);
+  const descriptionInput = screen.getByLabelText(/Beschreibung/);
+  const submitButton = screen.getByText(/Hinzufügen/);
+  act(() => {
+    fireEvent.change(titelInput, { target: { value: "TestTitel" } });
+    fireEvent.change(descriptionInput, {
+      target: { value: "TestBeschreibung" },
+    });
+  });
+
+  // validation happened
+  await waitFor(() => expect(submitButton).not.toBeDisabled());
+
+  fireEvent.submit(descriptionInput);
+
+  await screen.findByText(/Something went horribly wrong/);
+
+  // form does not clear
+  expect(titelInput).toHaveValue("TestTitel");
+  expect(descriptionInput).toHaveValue("TestBeschreibung");
 });

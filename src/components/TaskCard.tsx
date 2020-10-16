@@ -32,13 +32,13 @@ export function TaskCard(props: { task: Task }) {
   >(deleteTaskMutation);
 
   return (
-    <Card /* component="section" */>
+    <Card component="section">
       <CardHeader
         title={title}
         avatar={
           <Button
-            // role="checkbox"
-            // aria-checked={done}
+            role="checkbox"
+            aria-checked={done}
             startIcon={done ? <CheckCircleOutlineIcon /> : <CircleUnchecked />}
             size="small"
             color="primary"
@@ -48,7 +48,7 @@ export function TaskCard(props: { task: Task }) {
         action={
           <Button
             startIcon={<HighlightOffIcon />}
-            // aria-label="Task löschen"
+            aria-label="Task löschen"
             size="small"
             color="primary"
             onClick={() => deleteTodo({ id }, refetchTasksCtx)}
