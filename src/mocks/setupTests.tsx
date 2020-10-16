@@ -4,7 +4,13 @@ import { createClient, Provider } from "urql";
 import { mockServer } from "./mockServer";
 
 export function setupTests() {
-  const { boundActions, server, store, selectors } = mockServer();
+  const {
+    boundActions,
+    server,
+    store,
+    selectors,
+    changeScenario,
+  } = mockServer();
 
   beforeAll(() => server.listen());
   afterEach(() => {
@@ -20,5 +26,12 @@ export function setupTests() {
 
     return render(<Provider value={client}> {children} </Provider>);
   }
-  return { store, selectors, renderWithProvider, boundActions, server };
+  return {
+    store,
+    selectors,
+    renderWithProvider,
+    boundActions,
+    server,
+    changeScenario,
+  };
 }

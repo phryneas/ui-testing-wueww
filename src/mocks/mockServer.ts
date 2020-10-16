@@ -10,9 +10,11 @@ export function mockServer() {
     storeHelpers.store.dispatch
   );
 
-  const server = setupServer(
-    ...mockRequests("success", storeHelpers).requestHandlers
+  const { requestHandlers, changeScenario } = mockRequests(
+    "success",
+    storeHelpers
   );
+  const server = setupServer(...requestHandlers);
 
-  return { server, boundActions, ...storeHelpers };
+  return { server, boundActions, changeScenario, ...storeHelpers };
 }
