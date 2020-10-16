@@ -55,7 +55,7 @@ export function AddTodoForm() {
         <Grid className={classes.padding} container spacing={2}>
           <Grid item xs={12}>
             <TextField
-              id="newTask-title"
+              // id="newTask-title"
               inputProps={formik.getFieldProps("title")}
               error={formik.touched["title"] && !!formik.errors["title"]}
               helperText={formik.errors["title"]}
@@ -65,7 +65,7 @@ export function AddTodoForm() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              id="newTask-description"
+              // id="newTask-description"
               inputProps={formik.getFieldProps("description")}
               error={
                 formik.touched["description"] && !!formik.errors["description"]
